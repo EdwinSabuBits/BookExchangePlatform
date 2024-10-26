@@ -89,8 +89,6 @@ const updateBook = asyncHandler(async (req, res) => {
     book.genre = genre || book.genre;
     book.condition = condition || book.condition;
     book.availabilityStatus = availabilityStatus !== undefined ? availabilityStatus : book.availabilityStatus;
-
-    // Update location if provided, otherwise keep the existing location
     book.location = location || book.location;
 
     const updatedBook = await book.save();
