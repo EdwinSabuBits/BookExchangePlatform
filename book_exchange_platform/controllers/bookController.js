@@ -26,6 +26,11 @@ const addBook = asyncHandler(async (req, res) => {
   });
 
   const createdBook = await book.save();
+
+  // Push the book ID to the user's books array
+  user.books.push(createdBook._id);
+  await user.save();
+  
   res.status(201).json(createdBook);
 });
 

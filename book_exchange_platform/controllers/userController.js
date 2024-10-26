@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
+const Book = require('../models/bookModel');
 const generateToken = require('../utils/generateToken');
 const { blacklistToken } = require('../middleware/tokenBlacklist')
 const sendEmail = require('../utils/sendEmail');
@@ -75,10 +76,14 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @route   DELETE /api/users/me
 // @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
-  const user = await User.findByIdAndDelete(req.user._id);
+  const user = await User.findById(req.user._id);
 
   if (user) {
-    res.status(200).json({ message: 'User deleted successfully' });
+    // Delete all books associated with the user
+    await Book.deleteMany({ user: req.user._id });
+    // Delete user
+    await User.findByIdAndDelete(req.user._id);
+    res.json({ message: 'User and associated books removed' });
   } else {
     res.status(404);
     throw new Error('User not found');
