@@ -106,10 +106,15 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const otp = crypto.randomBytes(3).toString('hex');
 
   // Send OTP to user's email
-  const message = `Your OTP for password reset is ${otp}. It is valid for 10 minutes.`;
+  const message = `Hi ${user.name},
+                  Your OTP for password reset is ${otp}.
+                  It is valid for 10 minutes.
+
+                  Do not share with anyone.
+                  `;
   await sendEmail({
     email: user.email,
-    subject: 'Password Reset OTP',
+    subject: 'Password Reset OTP - Book Exchange Platform',
     message,
   });
 
