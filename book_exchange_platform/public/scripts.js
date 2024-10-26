@@ -180,3 +180,31 @@ document.getElementById('resetPasswordForm').addEventListener('submit', async (e
         alert('Password reset failed: An error occurred');
     }
 });
+
+// Update Profile
+document.getElementById('updateProfileForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const name = document.getElementById('nameUpdate').value;
+    const email = document.getElementById('emailUpdate').value;
+    const password = document.getElementById('passwordUpdate').value;
+    const location = document.getElementById('locationUpdate').value;
+
+    const token = localStorage.getItem('token'); // Retrieve token from storage
+    
+    const response = await fetch('http://localhost:5000/api/users/profile', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Include token in headers
+        },
+        body: JSON.stringify({ name, email, password, location }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+        alert('Profile updated successfully');
+    } else {
+        alert('Profile update failed: ' + data.message);
+    }
+});
+
