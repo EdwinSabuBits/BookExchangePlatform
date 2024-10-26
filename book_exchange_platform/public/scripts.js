@@ -208,3 +208,34 @@ document.getElementById('updateProfileForm').addEventListener('submit', async (e
     }
 });
 
+// Add Book
+document.getElementById('addBookForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const genre = document.getElementById('genre').value;
+    const condition = document.getElementById('condition').value;
+    const availabilityStatus = document.getElementById('availabilityStatus').value === 'true';
+    const location = document.getElementById('booklocation').value;
+
+    const bookData = { title, author, genre, condition, availabilityStatus, location };
+    console.log('Book Data:', bookData); // Log book data to see what's being sent
+
+    const token = localStorage.getItem('token'); // Retrieve token from storage
+
+    const response = await fetch('http://localhost:5000/api/books', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Include token in headers
+        },
+        body: JSON.stringify({ title, author, genre, condition, availabilityStatus, location }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+        alert('Book added successfully');
+    } else {
+        alert('Book addition failed: ' + data.message);
+    }
+});
