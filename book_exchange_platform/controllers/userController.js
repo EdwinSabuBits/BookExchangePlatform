@@ -43,7 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @desc    Authenticate user & get token
 // @route   POST /api/users/login
 // @access  Public
-const authUser = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -180,4 +180,4 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser, logoutUser, deleteUser, forgotPassword, resetPassword, updateUserProfile };
+module.exports = { registerUser, loginUser, logoutUser, deleteUser, forgotPassword, resetPassword, updateUserProfile };
