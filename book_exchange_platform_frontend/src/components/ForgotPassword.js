@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './ForgotPassword.css';
 import { useNavigate } from 'react-router-dom';
+import './ForgotPassword.css';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -8,24 +8,63 @@ function ForgotPassword() {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const navigate = useNavigate(); // Use navigate to redirect
+  const navigate = useNavigate();
 
-  const handleSendOtp = (e) => {
+  const handleSendOtp = async (e) => {
     e.preventDefault();
-    // Mock sending OTP function
-    setOtpSent(true);
-    alert('Password Reset OTP sent to email');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/users/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setOtpSent(true);
+        alert('Password Reset OTP sent to email');
+      } else {
+        alert(`Failed to send OTP: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
-  const handleResetPassword = (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
+
     if (newPassword !== confirmNewPassword) {
       alert('Passwords do not match');
       return;
     }
-    // Mock password reset function
-    alert('Password reset successful');
-    navigate('/'); // Redirect to login page
+
+    try {
+      const response = await fetch('http://localhost:5000/api/users/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, otp, newPassword }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Password reset successful');
+        navigate('/'); // Redirect to login page
+      } else {
+        alert(`Failed to reset password: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   return (
