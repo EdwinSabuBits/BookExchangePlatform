@@ -27,12 +27,11 @@ function Header() {
         )}
       </nav>
       {isLoggedIn && (
-        <button className="button_logout" onClick={() => {
+        <Link to="/" className="button_logout" onClick={() => {
           localStorage.removeItem('token');
-          window.location.href = '/';
         }}>
           Logout
-        </button>
+        </Link>
       )}
     </header>
   );
