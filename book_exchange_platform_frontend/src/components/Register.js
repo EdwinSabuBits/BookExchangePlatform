@@ -69,7 +69,7 @@ function Register() {
         </div>
         <button type="submit">Register</button>
       </form>
-      <button onClick={() => window.location.href = '/'}>Back to Login</button>
+      {/* <button onClick={() => window.location.href = '/'}>Back to Login</button> */}
     </div>
   );
 }
