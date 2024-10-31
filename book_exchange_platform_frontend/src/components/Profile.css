@@ -1,0 +1,28 @@
+.profile-container {
+  width: 80%; 
+  margin: 2rem auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(249, 194, 194, 0.6); 
+}
+
+h2, h3 {
+  text-align: left;
+}
+
+p, ul {
+  margin: 10px 0;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: space-around; 
+}
+
+.button_profile {
+  width: 100%;
+  padding: 8px;
+  margin: 10px;
+}

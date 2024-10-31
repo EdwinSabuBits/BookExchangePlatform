@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Register.css';
 
 function Register() {
@@ -7,6 +8,7 @@ function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [location, setLocation] = useState('');
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -16,6 +18,7 @@ function Register() {
     }
     // Mock registration function
     alert('Registration successful');
+    navigate('/profile'); // Redirect to Profile
   };
 
   return (
@@ -69,7 +72,6 @@ function Register() {
         </div>
         <button type="submit">Register</button>
       </form>
-      {/* <button onClick={() => window.location.href = '/'}>Back to Login</button> */}
     </div>
   );
 }
