@@ -2,17 +2,39 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-function Login({ setIsLoggedIn }) {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Mock login function
-    alert('Login successful');
-    setIsLoggedIn(true);
-    navigate('/profile');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Save token to localStorage
+        localStorage.setItem('token', data.token);
+        alert('Login successful');
+        window.dispatchEvent(new Event('storage')); 
+        navigate('/profile'); 
+        window.location.reload(); 
+      } else {
+        alert(`Login failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   return (

@@ -150,4 +150,32 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, loginUser, logoutUser, deleteUser, forgotPassword, resetPassword, updateUserProfile };
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  Private
+const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      location: user.location,
+      books: user.books 
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+
+module.exports = { registerUser, 
+                  loginUser, 
+                  logoutUser, 
+                  deleteUser, 
+                  forgotPassword, 
+                  resetPassword, 
+                  updateUserProfile,
+                  getUserProfile  };

@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import logo from '../assets/logo.png';
 
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    // Perform additional logout actions like clearing tokens, etc.
-  };
-
+  const isLoggedIn = !!localStorage.getItem('token'); // Check login state
   return (
     <header className="header">
       <div className="logo-container">
@@ -23,7 +17,6 @@ function Header() {
             <Link to="/profile">Profile</Link>
             <Link to="/search-books">Search Books</Link>
             <Link to="/book-listing">Book Listing</Link>
-            <button onClick={handleLogout}>Logout</button>
           </>
         ) : (
           <>
@@ -33,6 +26,14 @@ function Header() {
           </>
         )}
       </nav>
+      {isLoggedIn && (
+        <button className="button_logout" onClick={() => {
+          localStorage.removeItem('token');
+          window.location.href = '/';
+        }}>
+          Logout
+        </button>
+      )}
     </header>
   );
 }

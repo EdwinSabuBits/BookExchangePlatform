@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
@@ -12,6 +13,9 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
+// Enable CORS
+app.use(cors());
 
 // Middleware to parse JSON
 app.use(express.json());

@@ -10,15 +10,37 @@ function Register() {
   const [location, setLocation] = useState('');
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
     }
-    // Mock registration function
-    alert('Registration successful');
-    navigate('/profile'); // Redirect to Profile
+
+    try {
+      const response = await fetch('http://localhost:5000/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password, location }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Save token to localStorage
+        localStorage.setItem('token', data.token);
+        alert('Registration successful');
+        navigate('/profile'); 
+        window.location.reload(); 
+      } else {
+        alert(`Registration failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error registering:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   return (

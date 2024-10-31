@@ -12,13 +12,19 @@
 }
 
 .logo {
-  height: 35px; 
+  height: 35px;
   margin-right: 1rem;
 }
 
 .header h1 {
   margin: 0;
   font-size: 1.5rem;
+}
+
+.header nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
 }
 
 .header nav a {
@@ -29,4 +35,11 @@
 
 .header nav a:hover {
   text-decoration: underline;
+}
+
+.button_logout {
+  margin-left: 1rem;
+  align-items: center;
+  width: 10%;
+  text-align: center;
 }
