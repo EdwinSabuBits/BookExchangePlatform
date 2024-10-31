@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ForgotPassword.css';
+import { useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -7,6 +8,7 @@ function ForgotPassword() {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const navigate = useNavigate(); // Use navigate to redirect
 
   const handleSendOtp = (e) => {
     e.preventDefault();
@@ -23,6 +25,7 @@ function ForgotPassword() {
     }
     // Mock password reset function
     alert('Password reset successful');
+    navigate('/'); // Redirect to login page
   };
 
   return (
