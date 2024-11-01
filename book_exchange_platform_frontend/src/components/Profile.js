@@ -4,6 +4,7 @@ import './Profile.css';
 
 function Profile() {
   const [user, setUser] = useState(null);
+  const [books, setBooks] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +23,26 @@ function Profile() {
 
         if (response.ok) {
           setUser(data);
+
+          // Fetch books data
+          const booksResponse = await fetch(`http://localhost:5000/api/books/user/${data._id}`, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const booksData = await booksResponse.json();
+
+          if (booksResponse.ok) {
+            if (Array.isArray(booksData.books)) {
+              setBooks(booksData.books); // Extract the books array
+            } else {
+              console.error('Books data is not an array:', booksData.books);
+            }
+          } else {
+            alert(`Failed to fetch books data: ${booksData.message}`);
+          }
         } else {
           alert(`Failed to fetch user data: ${data.message}`);
           navigate('/');
@@ -40,7 +61,7 @@ function Profile() {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch('http://localhost:5000/api/users/me', {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -76,8 +97,8 @@ function Profile() {
           <p><strong>Location:</strong> {user.location}</p>
           <h3>Books Listed</h3>
           <ul>
-            {user.books.map((book, index) => (
-              <li key={index}>{book}</li>
+            {books.map((book, index) => (
+              <li key={index}>{book.title}</li>
             ))}
           </ul>
           <div className="profile-actions">
