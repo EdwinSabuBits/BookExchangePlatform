@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Profile.css';
 
 function Profile() {
@@ -55,28 +55,31 @@ function Profile() {
     fetchUserData();
   }, [navigate]);
 
+
   const handleDeleteProfile = async () => {
-    const token = localStorage.getItem('token');
+    if (window.confirm("Are you sure you want to delete the profile? Deleting the profile will automatically delete the books listed by you!")) {
+      const token = localStorage.getItem('token');
 
-    try {
-      const response = await fetch('http://localhost:5000/api/users/me', {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      try {
+        const response = await fetch('http://localhost:5000/api/users/me', {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      if (response.ok) {
-        alert('Profile deleted');
-        localStorage.removeItem('token');
-        navigate('/');
-      } else {
-        const data = await response.json();
-        alert(`Failed to delete profile: ${data.message}`);
+        if (response.ok) {
+          alert('Profile deleted');
+          localStorage.removeItem('token');
+          navigate('/');
+        } else {
+          const data = await response.json();
+          alert(`Failed to delete profile: ${data.message}`);
+        }
+      } catch (error) {
+        console.error('Error deleting profile:', error);
+        alert('An error occurred. Please try again.');
       }
-    } catch (error) {
-      console.error('Error deleting profile:', error);
-      alert('An error occurred. Please try again.');
     }
   };
 
@@ -95,7 +98,9 @@ function Profile() {
           <h3>Books Listed</h3>
           <ul>
             {books.map((book, index) => (
-              <li key={index}>{book.title}</li>
+              <li key={index}>
+                <Link to={`/books/${book._id}`}>{book.title}</Link>
+              </li>
             ))}
           </ul>
           <div className="profile-actions">
