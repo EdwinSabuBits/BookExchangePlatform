@@ -31,7 +31,6 @@ function SearchBooks() {
         setBooks(data.books);
         setTotalPages(data.pages);
 
-        // Extract genres and locations from books
         const fetchedGenres = Array.from(new Set(data.books.map(book => book.genre))).filter(genre => genre);
         setGenres(fetchedGenres);
 
@@ -80,7 +79,7 @@ function SearchBooks() {
     setGenre('');
     setLocation('');
     setPageNumber(1);
-    setFilteredBooks(books); // Reset filters and show all books
+    setFilteredBooks(books); 
   };
 
   useEffect(() => {

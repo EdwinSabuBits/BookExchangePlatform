@@ -60,7 +60,7 @@
 
 .pagination {
   display: flex;
-  justify-content: flex-start; /* Align pagination to the left */
+  justify-content: flex-start; 
   margin-top: 20px;
 }
 

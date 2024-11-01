@@ -29,7 +29,6 @@ function Register() {
       const data = await response.json();
 
       if (response.ok) {
-        // Save token to localStorage
         localStorage.setItem('token', data.token);
         navigate('/profile'); 
         window.location.reload(); 

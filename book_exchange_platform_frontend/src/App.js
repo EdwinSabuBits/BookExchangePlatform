@@ -8,6 +8,7 @@ import ForgotPassword from './components/ForgotPassword';
 import Profile from './components/Profile';
 import SearchBooks from './components/SearchBooks'; 
 import UpdateProfile from './components/UpdateProfile';
+import BookListing from './components/BookListing';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/search-books" element={<SearchBooks />} /> 
             <Route path="/update-profile" element={<UpdateProfile />} />
+            <Route path="/book-listing" element={<BookListing />} />
           </Routes>
         </main>
         <Footer />

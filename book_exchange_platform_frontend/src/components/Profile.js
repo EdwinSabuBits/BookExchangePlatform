@@ -24,7 +24,6 @@ function Profile() {
         if (response.ok) {
           setUser(data);
 
-          // Fetch books data
           const booksResponse = await fetch(`http://localhost:5000/api/books/user/${data._id}`, {
             method: 'GET',
             headers: {
@@ -36,7 +35,7 @@ function Profile() {
 
           if (booksResponse.ok) {
             if (Array.isArray(booksData.books)) {
-              setBooks(booksData.books); // Extract the books array
+              setBooks(booksData.books); 
             } else {
               console.error('Books data is not an array:', booksData.books);
             }

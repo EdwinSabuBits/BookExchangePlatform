@@ -1,0 +1,71 @@
+.book-listing-container {
+    width: 50%;
+    margin: 2rem auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(204, 205, 201, 0.6);
+  }
+  
+  .book-listing-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .book-listing-form label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+  
+  .book-listing-form input,
+  .book-listing-form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .book-listing-form input {
+    width: 97.25%;
+  }
+  
+  .book-listing-form .form-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .form-buttons button {
+    flex: 1;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submit-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .clear-button {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  .clear-button:hover {
+    background-color: #e9ecef;
+  }
+  

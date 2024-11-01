@@ -4,7 +4,7 @@ import './Header.css';
 import logo from '../assets/logo.png';
 
 function Header() {
-  const isLoggedIn = !!localStorage.getItem('token'); // Check login state
+  const isLoggedIn = !!localStorage.getItem('token'); 
   return (
     <header className="header">
       <div className="logo-container">

@@ -62,7 +62,7 @@ function UpdateProfile() {
 
       if (response.ok) {
         alert('Profile updated successfully');
-        navigate('/profile'); // Redirect to profile page
+        navigate('/profile'); 
       } else {
         alert(`Failed to update profile: ${data.message}`);
       }
