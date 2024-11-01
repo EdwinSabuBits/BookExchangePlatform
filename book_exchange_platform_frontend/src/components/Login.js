@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext'; 
 import './Login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { setIsLoggedIn, setUserId } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch('http://localhost:5000/api/users/login', {
         method: 'POST',
@@ -20,12 +21,13 @@ function Login() {
       });
 
       const data = await response.json();
-
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        window.dispatchEvent(new Event('storage')); 
-        navigate('/profile'); 
-        window.location.reload(); 
+        localStorage.setItem('userId', data._id); 
+        setIsLoggedIn(true);
+        setUserId(data._id); 
+        navigate('/profile');
+        window.location.reload();
       } else {
         alert(`Login failed: ${data.message}`);
       }

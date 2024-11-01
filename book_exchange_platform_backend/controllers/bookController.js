@@ -33,16 +33,12 @@ const getBooks = asyncHandler(async (req, res) => {
   res.json({ books, page, pages });
 });
 
-// @desc    Get books by user with pagination
+// @desc    Get books by user
 // @route   GET /api/books/user/:userId
 // @access  Private
 const getUserBooks = asyncHandler(async (req, res) => {
-  const pageSize = 10;
-  const currentPage = Number(req.query.pageNumber) || 1;
-
-  const { books, page, pages } = await bookService.getBooksByUser(req.params.userId, currentPage, pageSize);
-
-  res.json({ books, page, pages });
+  const { books } = await bookService.getBooksByUser(req.params.userId);
+  res.json({ books });
 });
 
 // @desc    Update a book

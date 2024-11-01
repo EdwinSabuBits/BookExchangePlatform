@@ -18,7 +18,7 @@ function SearchBooks() {
   const fetchBooks = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
-      navigate('/'); // Redirect to login if not authenticated
+      navigate('/'); 
       return;
     }
 
@@ -35,7 +35,6 @@ function SearchBooks() {
         setBooks(data.books);
         setTotalPages(data.pages);
 
-        // Extract genres and locations from books
         const fetchedGenres = Array.from(new Set(data.books.map(book => book.genre))).filter(genre => genre);
         setGenres(fetchedGenres);
 
@@ -84,7 +83,7 @@ function SearchBooks() {
     setGenre('');
     setLocation('');
     setPageNumber(1);
-    setFilteredBooks(books); // Reset filters and show all books
+    setFilteredBooks(books); 
   };
 
   useEffect(() => {
@@ -103,9 +102,6 @@ function SearchBooks() {
     }
   };
 
-  const handleBookClick = (book) => {
-    navigate(`/books/${book._id}`);
-  };
 
   return (
     <div className="search-books-container">
@@ -152,7 +148,7 @@ function SearchBooks() {
       <div className="books-list">
         {filteredBooks.map((book) => (
           <div key={book._id} className="book-item">
-            <h3><Link to={`/books/${book._id}`}>{book.title}</Link></h3>
+            <h3><Link to={`/books/${book._id}`} state={{ from: 'search' }} onClick={() => sessionStorage.setItem('backLink', 'search')}>{book.title}</Link></h3>
             <p>{book.author}</p>
             <p>{book.availabilityStatus ? 'Available' : 'Not Available'}</p>
           </div>

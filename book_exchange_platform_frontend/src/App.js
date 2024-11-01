@@ -10,6 +10,7 @@ import SearchBooks from './components/SearchBooks';
 import UpdateProfile from './components/UpdateProfile';
 import BookListing from './components/BookListing';
 import BookDetail from './components/BookDetail';
+import UpdateBook from './components/UpdateBook';
 import './App.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/update-profile" element={<UpdateProfile />} />
             <Route path="/book-listing" element={<BookListing />} />
             <Route path="/books/:id" element={<BookDetail />} />
+            <Route path="/update-book/:id" element={<UpdateBook />} />
           </Routes>
         </main>
         <Footer />

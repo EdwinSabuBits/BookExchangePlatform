@@ -45,13 +45,9 @@ const getAllBooks = async (page, pageSize, keyword) => {
   return { books, page, pages: Math.ceil(count / pageSize) };
 };
 
-const getBooksByUser = async (userId, page, pageSize) => {
-  const count = await Book.countDocuments({ user: userId });
-  const books = await Book.find({ user: userId })
-    .limit(pageSize)
-    .skip(pageSize * (page - 1));
-  
-  return { books, page, pages: Math.ceil(count / pageSize) };
+const getBooksByUser = async (userId) => {
+  const books = await Book.find({ user: userId });
+  return { books };
 };
 
 const updateBook = async (bookId, userId, updateData) => {

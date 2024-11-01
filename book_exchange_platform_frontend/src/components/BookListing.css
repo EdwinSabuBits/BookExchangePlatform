@@ -19,21 +19,17 @@
     flex-direction: column;
     width: 100%;
     margin-bottom: 15px;
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   
   .book-listing-form input,
   .book-listing-form select {
-    width: 100%;
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
   
-  .book-listing-form input {
-    width: 97.25%;
-  }
   
   .book-listing-form .form-buttons {
     display: flex;
