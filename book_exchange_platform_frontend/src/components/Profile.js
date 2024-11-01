@@ -82,8 +82,7 @@ function Profile() {
   };
 
   const handleUpdateProfile = () => {
-    // Navigate to update profile form or implement inline editing
-    alert('Update profile form');
+    navigate('/update-profile');
   };
 
   return (

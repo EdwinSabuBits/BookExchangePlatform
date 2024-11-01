@@ -7,6 +7,7 @@ import Register from './components/Register';
 import ForgotPassword from './components/ForgotPassword';
 import Profile from './components/Profile';
 import SearchBooks from './components/SearchBooks'; 
+import UpdateProfile from './components/UpdateProfile';
 import './App.css';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/search-books" element={<SearchBooks />} /> 
+            <Route path="/update-profile" element={<UpdateProfile />} />
           </Routes>
         </main>
         <Footer />
