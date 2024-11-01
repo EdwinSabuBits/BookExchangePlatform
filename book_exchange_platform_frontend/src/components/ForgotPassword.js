@@ -57,7 +57,7 @@ function ForgotPassword() {
 
       if (response.ok) {
         alert('Password reset successful');
-        navigate('/'); // Redirect to login page
+        navigate('/'); 
       } else {
         alert(`Failed to reset password: ${data.message}`);
       }

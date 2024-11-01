@@ -97,4 +97,18 @@ const deleteBook = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { addBook, getBooks, updateBook, deleteBook, getUserBooks };
+// @desc    Get book by ID
+// @route   GET /api/books/:id
+// @access  Private
+const getBookById = asyncHandler(async (req, res) => {
+  const book = await bookService.getBookById(req.params.id);
+
+  if (book) {
+    res.json(book);
+  } else {
+    res.status(404);
+    throw new Error('Book not found');
+  }
+});
+
+module.exports = { addBook, getBooks, updateBook, deleteBook, getUserBooks, getBookById };

@@ -89,6 +89,14 @@ const deleteBook = async (bookId, userId) => {
   return { message: 'Book removed' };
 };
 
+const getBookById = async (id) => {
+  const book = await Book.findById(id);
+  if (!book) {
+    throw new Error('Book not found');
+  }
+  return book;
+};
+
 module.exports = {
   createBook,
   deleteBooksByUserId,
@@ -96,4 +104,5 @@ module.exports = {
   getBooksByUser,
   updateBook,
   deleteBook,
+  getBookById
 };
