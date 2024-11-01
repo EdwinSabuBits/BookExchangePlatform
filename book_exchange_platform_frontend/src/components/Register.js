@@ -31,7 +31,6 @@ function Register() {
       if (response.ok) {
         // Save token to localStorage
         localStorage.setItem('token', data.token);
-        alert('Registration successful');
         navigate('/profile'); 
         window.location.reload(); 
       } else {

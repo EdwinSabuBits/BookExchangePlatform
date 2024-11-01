@@ -24,7 +24,6 @@ function Login() {
       if (response.ok) {
         // Save token to localStorage
         localStorage.setItem('token', data.token);
-        alert('Login successful');
         window.dispatchEvent(new Event('storage')); 
         navigate('/profile'); 
         window.location.reload(); 
