@@ -83,7 +83,6 @@ function BookListing() {
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            required
           />
         </label>
         <label>
@@ -91,7 +90,6 @@ function BookListing() {
           <select
             value={availabilityStatus}
             onChange={(e) => setAvailabilityStatus(e.target.value)}
-            required
           >
             <option value="">Select Status</option>
             <option value="true">Available</option>
