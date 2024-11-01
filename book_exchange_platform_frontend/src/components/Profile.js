@@ -49,7 +49,6 @@ function Profile() {
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
-        alert('An error occurred. Please try again.');
         navigate('/');
       }
     };

@@ -76,3 +76,7 @@
   background-color: #e9ecef;
   cursor: not-allowed;
 }
+
+a {
+  color: rgba(0, 0, 0, 0.6);
+}

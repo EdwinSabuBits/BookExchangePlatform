@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './SearchBooks.css';
 
 function SearchBooks() {
@@ -13,14 +12,11 @@ function SearchBooks() {
   const [genres, setGenres] = useState([]);
   const [locations, setLocations] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
-  const navigate = useNavigate();
+  const [selectedBook, setSelectedBook] = useState(null);
 
   const fetchBooks = async () => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/'); // Redirect to login if not authenticated
-      return;
-    }
+    if (!token) return;
 
     try {
       const response = await fetch(`http://localhost:5000/api/books?pageNumber=${pageNumber}&keyword=${keyword}`, {
@@ -78,7 +74,7 @@ function SearchBooks() {
     setFilteredBooks(updatedBooks);
   };
 
-  const handleReset = () => {
+  const handleResetFilters = () => {
     setKeyword('');
     setAvailabilityStatus('');
     setGenre('');
@@ -103,70 +99,92 @@ function SearchBooks() {
     }
   };
 
+  const handleBookClick = (book) => {
+    setSelectedBook(book);
+  };
+
+  const handleBackToResults = () => {
+    setSelectedBook(null);
+  };
+
   return (
     <div className="search-books-container">
-      <h2>Search Books</h2>
-      <form className="search-form">
-        <label>
-          Search
-          <input
-            type="text"
-            placeholder="Search by keyword"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            className="search-field"
-          />
-        </label>
-        <label>
-          Availability
-          <select value={availabilityStatus} onChange={(e) => setAvailabilityStatus(e.target.value)} className="dropdown">
-            <option value="">All</option>
-            <option value="true">Available</option>
-            <option value="false">Not Available</option>
-          </select>
-        </label>
-        <label>
-          Genre
-          <select value={genre} onChange={(e) => setGenre(e.target.value)} className="dropdown">
-            <option value="">All</option>
-            {genres.map((g, index) => (
-              <option key={index} value={g}>{g}</option>
+      {!selectedBook ? (
+        <>
+          <h2>Search Books</h2>
+          <form className="search-form">
+            <label>
+              Search
+              <input
+                type="text"
+                placeholder="Search by keyword"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                className="search-field"
+              />
+            </label>
+            <label>
+              Availability
+              <select value={availabilityStatus} onChange={(e) => setAvailabilityStatus(e.target.value)} className="dropdown">
+                <option value="">All</option>
+                <option value="true">Available</option>
+                <option value="false">Not Available</option>
+              </select>
+            </label>
+            <label>
+              Genre
+              <select value={genre} onChange={(e) => setGenre(e.target.value)} className="dropdown">
+                <option value="">All</option>
+                {genres.map((g, index) => (
+                  <option key={index} value={g}>{g}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Location
+              <select value={location} onChange={(e) => setLocation(e.target.value)} className="dropdown">
+                <option value="">All</option>
+                {locations.map((l, index) => (
+                  <option key={index} value={l}>{l}</option>
+                ))}
+              </select>
+            </label>
+            <button type="button" className="reset-button" onClick={handleResetFilters}>Reset Filters</button>
+          </form>
+          <div className="books-list">
+            {filteredBooks.map((book) => (
+              <div key={book._id} className="book-item">
+                <h3><a href="#" onClick={() => handleBookClick(book)}>{book.title}</a></h3>
+                <p>{book.author}</p>
+                <p>{book.availabilityStatus ? 'Available' : 'Not Available'}</p>
+              </div>
             ))}
-          </select>
-        </label>
-        <label>
-          Location
-          <select value={location} onChange={(e) => setLocation(e.target.value)} className="dropdown">
-            <option value="">All</option>
-            {locations.map((l, index) => (
-              <option key={index} value={l}>{l}</option>
-            ))}
-          </select>
-        </label>
-        <button type="button" className="reset-button" onClick={handleReset}>Reset</button>
-      </form>
-      <div className="books-list">
-        {filteredBooks.map((book) => (
-          <div key={book._id} className="book-item">
-            <h3>{book.title}</h3>
-            <p>{book.author}</p>
-            <p>{book.availabilityStatus ? 'Available' : 'Not Available'}</p>
           </div>
-        ))}
-      </div>
-      <div className="pagination">
-        <button onClick={goToPreviousPage} disabled={pageNumber === 1}>Prev</button>
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index}
-            onClick={() => setPageNumber(index + 1)}
-            disabled={pageNumber === index + 1}
-          >
-            {index + 1}
-          </button>
-        ))}
-        <button onClick={goToNextPage} disabled={pageNumber === totalPages}>Next</button>
-      </div>
+          <div className="pagination">
+            <button onClick={goToPreviousPage} disabled={pageNumber === 1}>Prev</button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => setPageNumber(index + 1)}
+                disabled={pageNumber === index + 1}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button onClick={goToNextPage} disabled={pageNumber === totalPages}>Next</button>
+          </div>
+        </>
+      ) : (
+        <div className="book-detail">
+          <h2>Book Details</h2>
+          <h3>{selectedBook.title}</h3>
+          <p><strong>Author:</strong> {selectedBook.author}</p>
+          <p><strong>Genre:</strong> {selectedBook.genre}</p>
+          <p><strong>Location:</strong> {selectedBook.location}</p>
+          <p><strong>Availability:</strong> {selectedBook.availabilityStatus ? 'Available' : 'Not Available'}</p>
+          <button onClick={handleBackToResults}>Back to Results</button>
+        </div>
+      )}
     </div>
   );
 }
