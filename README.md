@@ -40,11 +40,19 @@ EMAIL_PASS=your-email-password
 ### 4. Run the Server
 Development Mode (using nodemon):
 ```bash
+cd book_exchange_platform_backend
 npm run dev
 ```
 
 Production Mode:
 ```bash
+cd book_exchange_platform_backend
+npm start
+```
+
+### 5. Run the Frontend
+```bash
+cd book_exchange_platform_frontend
 npm start
 ```
 
@@ -55,6 +63,8 @@ npm start
 - **POST /api/users/login:** Log in a user
 
 - **POST /api/users/logout:** Log out a user
+
+- **GET /api/users/profile:** Get user profile
 
 - **PUT /api/users/profile:** Update user profile
 
@@ -69,20 +79,24 @@ npm start
 
 - **GET /api/books:** Get all books with pagination and search
 
+- **GET /api/books/:id:** Get a book
+
 - **PUT /api/books/:id:** Update a book
 
 - **DELETE /api/books/:id:** Delete a book
 
-- **GET /api/books/user/:userId:** Get books by user with pagination
+- **GET /api/books/user/:userId:** Get books by user
 
 ## Usage
 - Register a new user.
 
 - Log in using your credentials.
 
+- Update & delete the user profile.
+
 - Add, edit, delete, and search for books.
 
-- Manage your book listings and transactions.
+- Manage your book listings.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/?form=MG0AV3)
