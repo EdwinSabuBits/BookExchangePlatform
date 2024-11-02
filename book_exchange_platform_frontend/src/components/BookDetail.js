@@ -56,37 +56,27 @@ function BookDetail() {
     navigate(`/update-book/${id}`, { state: loc.state }); 
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem('token');
-    try {
-      const response = await fetch(`http://localhost:5000/api/books/${id}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title,
-          author,
-          genre,
-          location: bookLocation,
-          availabilityStatus: availabilityStatus === 'Available',
-          condition,
-        }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setBook(data);
-        setIsEditing(false);
-        alert('Book details updated successfully.');
-        navigate(`/books/${id}`, { state: loc.state });
-      } else {
-        alert(`Failed to update book details: ${data.message}`);
+  const handleDeleteClick = async () => {
+    if (window.confirm(`Do you want to delete ${book.title}?`)) {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await fetch(`http://localhost:5000/api/books/${id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          alert('Book deleted successfully.');
+          navigate('/profile'); // Adjust the navigation as needed
+        } else {
+          const data = await response.json();
+          alert(`Failed to delete book: ${data.message}`);
+        }
+      } catch (error) {
+        console.error('Error deleting book:', error);
+        alert('An error occurred. Please try again.');
       }
-    } catch (error) {
-      console.error('Error updating book details:', error);
-      alert('An error occurred. Please try again.');
     }
   };
 
@@ -98,51 +88,21 @@ function BookDetail() {
   return (
     <div className="book-detail-container">
       {book ? (
-        isEditing ? (
-          <form onSubmit={handleSave} className="edit-book-form">
-            <label>
-              Title
-              <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-            </label>
-            <label>
-              Author
-              <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} required />
-            </label>
-            <label>
-              Genre
-              <input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} required />
-            </label>
-            <label>
-              Location
-              <input type="text" value={bookLocation} onChange={(e) => setBookLocation(e.target.value)} required />
-            </label>
-            <label>
-              Availability Status
-              <select value={availabilityStatus} onChange={(e) => setAvailabilityStatus(e.target.value)} required>
-                <option value="Available">Available</option>
-                <option value="Not Available">Not Available</option>
-              </select>
-            </label>
-            <label>
-              Condition
-              <input type="text" value={condition} onChange={(e) => setCondition(e.target.value)} required />
-            </label>
-            <button type="submit" className="submit-button">Save</button>
-          </form>
-        ) : (
-          <>
-            <h2>{book.title}</h2>
-            <p><strong>Author:</strong> {book.author}</p>
-            <p><strong>Genre:</strong> {book.genre}</p>
-            <p><strong>Location:</strong> {bookLocation}</p>
-            <p><strong>Status:</strong> {book.availabilityStatus ? 'Available' : 'Not Available'}</p>
-            <p><strong>Condition:</strong> {book.condition}</p>
-            {book.user === userId && (
+        <>
+          <h2>{book.title}</h2>
+          <p><strong>Author:</strong> {book.author}</p>
+          <p><strong>Genre:</strong> {book.genre}</p>
+          <p><strong>Location:</strong> {bookLocation}</p>
+          <p><strong>Status:</strong> {book.availabilityStatus ? 'Available' : 'Not Available'}</p>
+          <p><strong>Condition:</strong> {book.condition}</p>
+          {book.user === userId && (
+            <>
               <button onClick={handleEditClick} className="edit-button">Edit</button>
-            )}
-            <button onClick={handleBackClick}>Back</button>
-          </>
-        )
+              <button onClick={handleDeleteClick} className="delete-button">Delete</button>
+            </>
+          )}
+          <button onClick={handleBackClick}>Back</button>
+        </>
       ) : (
         <p>Loading...</p>
       )}
